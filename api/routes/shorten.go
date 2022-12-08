@@ -22,7 +22,7 @@ var id string
 func Shorten(ctx *fiber.Ctx) error {
 	
 	
-	db, err := sql.Open("mysql", "root:12345678@tcp(127.0.0.1:3306)/test")
+	db, err := sql.Open("mysql", "root:8f#Ne65tKo<z@tcp(127.0.0.1:3306)/test")
     if err != nil {
         panic(err.Error())
     }

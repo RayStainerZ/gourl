@@ -11,6 +11,7 @@ import (
 type dbinfo struct {
 	URL string `json:"url"`
 }
+// Urlinfo function : takes in a url and returns its information (clicks, etc)
 func Urlinfo(ctx *fiber.Ctx) error {
 	
 	db, err := sql.Open("mysql", "root:8f#Ne65tKo<z@tcp(127.0.0.1:3306)/test")

@@ -8,12 +8,13 @@ import (
 	"github.com/raystainerz/gourl/routes"
 )
 
+// setupRoutes function : sets up the routes for the app
 func setupRoutes(app *fiber.App) {
 	app.Get("/:url", routes.Resolve)
 	app.Post("/api/v1", routes.Shorten)
 	app.Post("/api/v1/urlinfo", routes.Urlinfo)
 }
-
+// main function : starts the app
 func main() {
 	err := godotenv.Load()
 	if err != nil {

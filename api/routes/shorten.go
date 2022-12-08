@@ -55,6 +55,18 @@ func Shorten(ctx *fiber.Ctx) error {
     defer insert.Close()
     fmt.Println("New url added!")
 	
+	//check if url already exists in trackurl table
+	var redurl string
+	row := db.QueryRow("SELECT url FROM trackurl WHERE url = ?;", body.URL)
+	row.Scan(&redurl)
+	if redurl == "" {
+		trackurl, err := db.Query("INSERT INTO trackurl (url, clicks, type ) VALUES(?,?,?)", body.URL, 0, "short")
+		if err !=nil {
+			panic(err.Error())
+		}
+		defer trackurl.Close()
+	}
+	
 	resp := response{
 		URL:             body.URL,
 		CustomShort:     "",

@@ -17,8 +17,23 @@ func Resolve(ctx *fiber.Ctx) error {
 
 	row := db.QueryRow("SELECT url FROM new_table WHERE slug = ?;", url)
 	row.Scan(&redurl)
+
+	increment, err := db.Query("UPDATE trackurl SET clicks = clicks + 1 WHERE url = ?;", redurl)
+	if err !=nil {
+        panic(err.Error())
+    }
+	defer increment.Close()
 	// print("----->")
 	// print(redurl)
 
+	//get ip of the client
+	ip := ctx.IP()
+	
+	//insert ip into userlogs table 
+	insert, err := db.Query("INSERT INTO userlogs (ip, url) VALUES (?, ?);", ip, redurl)
+	if err !=nil {
+		panic(err.Error())
+	}
+	defer insert.Close()
 	return ctx.Redirect(redurl, 301)
 }
